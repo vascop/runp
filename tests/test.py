@@ -79,5 +79,44 @@ wut(text, woop=False)
         output = sys.stdout.getvalue().strip()
         self.assertEquals(str(output), out)
 
+    def test_get_function_nonexistant(self):
+        nofunc = "wutwut"
+        out = "No function named '{}' found!".format(nofunc)
+        runp.get_function(self.functions, nofunc)
+        output = sys.stdout.getvalue().strip()
+        self.assertEquals(str(output), out)
+
+    def test_parse_args_noargs(self):
+        inputstr = "wut"
+        cmd, args, kwargs = runp.parse_args(inputstr)
+        tup = (cmd, args, kwargs)
+        self.assertEquals(tup, ("wut", [], {}))
+
+    def test_parse_args_nokwargs(self):
+        inputstr = "wut:wow,such,good"
+        cmd, args, kwargs = runp.parse_args(inputstr)
+        tup = (cmd, args, kwargs)
+        self.assertEquals(tup, ("wut", ["wow", "such", "good"], {}))
+
+    def test_parse_args(self):
+        inputstr = "wut:arg=wow,'such spaces',arg2=good"
+        cmd, args, kwargs = runp.parse_args(inputstr)
+        tup = (cmd, args, kwargs)
+        self.assertEquals(
+            tup,
+            ("wut", ["'such spaces'"], {"arg": "wow", "arg2": "good"})
+        )
+
+    def test_escape_split_comma(self):
+        inputstr = "wut:arg=wow,'such spaces',arg2=good"
+        splitted = ['wut:arg=wow', "'such spaces'", 'arg2=good']
+        self.assertEquals(runp._escape_split(',', inputstr), splitted)
+
+    def test_escape_split_equals(self):
+        inputstrs = ['wut:arg=wow', "'such spaces'", 'arg2=good']
+        results = [['wut:arg', 'wow'], ["'such spaces'"], ['arg2', 'good']]
+        for i, inputstr in enumerate(inputstrs):
+            self.assertEquals(runp._escape_split('=', inputstr), results[i])
+
 if __name__ == '__main__':
     unittest.main()

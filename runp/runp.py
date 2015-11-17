@@ -25,28 +25,9 @@ def load_runfile(runfile):
     importer = __import__
     directory, runfile = os.path.split(runfile)
 
-    added_to_path = False
-    index = None
-
-    if directory not in sys.path:
-        sys.path.insert(0, directory)
-        added_to_path = True
-    else:
-        i = sys.path.index(directory)
-        if i != 0:
-            index = i
-            sys.path.insert(0, directory)
-            del sys.path[i + 1]
-
+    sys.path.insert(0, directory)
     imported = importer(os.path.splitext(runfile)[0])
-
-    if added_to_path:
-        del sys.path[0]
-
-    if index is not None:
-        sys.path.insert(index + 1, directory)
-        del sys.path[0]
-
+    del sys.path[0]
     imported_vars = vars(imported).items()
     return imported_vars
 
