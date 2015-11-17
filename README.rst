@@ -4,6 +4,10 @@ runp
 .. image:: https://travis-ci.org/vascop/runp.svg
     :target: https://travis-ci.org/vascop/runp
 
+.. image:: https://coveralls.io/repos/vascop/runp/badge.svg?branch=master&service=github
+  :target: https://coveralls.io/github/vascop/runp?branch=master
+
+
 runp exports Python functions from files to the command line. 
 You don't need to change your existing code.
 
