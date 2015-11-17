@@ -1,6 +1,9 @@
 runp
 ====
 
+.. image:: https://travis-ci.org/vascop/runp.svg
+    :target: https://travis-ci.org/vascop/runp
+
 runp exports Python functions from files to the command line. 
 You don't need to change your existing code.
 
